@@ -1,0 +1,17 @@
+
+git clone https://github.com/hhru/frontik ./frontik_without_testing
+cd frontik_without_testing/
+
+git filter-branch --tree-filter 'rm -f -d -R frontik/testing' --prune-empty HEAD
+git remote add github https://github.com/Udimus/frontik_without_testing.git
+git remote set-url origin https://github.com/Udimus/frontik_without_testing.git
+git remote prune origin
+git push origin master
+
+
+cd ..
+git clone https://github.com/hhru/frontik ./frontik_only_testing
+cd frontik_only_testing/
+git filter-branch --tree-filter "find . -type f -not -wholename './frontik/testing/*' -delete" --prune-empty HEAD
+git remote set-url origin https://github.com/Udimus/frontik_testing.git
+git push origin master
